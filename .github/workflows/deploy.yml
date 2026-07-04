@@ -39,22 +39,28 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Copy env
+      - name: Configure environment
         run: |
-          cp .env.example .env
+          cat > .env << 'EOF'
+          APP_NAME="EmBuddy Admin"
+          APP_ENV=testing
+          APP_KEY=
+          APP_DEBUG=true
+          DB_CONNECTION=mysql
+          DB_HOST=127.0.0.1
+          DB_PORT=3306
+          DB_DATABASE=embuddy_test
+          DB_USERNAME=embuddy_test
+          DB_PASSWORD=test-pass
+          SESSION_DRIVER=file
+          CACHE_STORE=file
+          QUEUE_CONNECTION=sync
+          EOF
+          sed -i 's/^          //' .env
           php artisan key:generate
 
-      - name: Configure test database
-        run: |
-          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
-          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
-          sed -i 's/DB_DATABASE=.*/DB_DATABASE=embuddy_test/' .env
-          sed -i 's/DB_USERNAME=.*/DB_USERNAME=embuddy_test/' .env
-          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=test-pass/' .env
-
       - name: Run migrations
-        run: php artisan migrate --force --no-interaction
+        run: php artisan migrate --force
 
       - name: Run tests
         run: php artisan test
@@ -71,26 +77,41 @@ jobs:
           host: aq.si
           username: h2o
           key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 10m
           script: |
-            cd ~/embuddy-admin
+            set -e
 
-            # Pull latest
+            # 1. Ensure API stack (MySQL) is running
+            cd ~/embuddy-api
             git pull origin main
-
-            # Rebuild and restart
-            docker compose down
-            docker compose build --no-cache
             docker compose up -d
-
-            # Wait for healthy
-            echo "Waiting for admin panel..."
+            echo "⏳ Waiting for MySQL..."
             for i in $(seq 1 30); do
-              if curl -sf http://localhost:8001 > /dev/null 2>&1; then
-                echo "✅ Admin panel is running!"
+              if docker exec embuddy-mysql mysqladmin ping -h localhost -u root -pembuddy-root-2026 > /dev/null 2>&1; then
+                echo "✅ MySQL ready"
+                break
+              fi
+              sleep 2
+            done
+
+            # 2. Deploy admin panel
+            cd ~/embuddy-admin
+            git pull origin main
+            docker compose down
+            docker compose up -d --build
+
+            # 3. Run migrations inside container
+            docker exec embuddy-admin php artisan migrate --force 2>/dev/null || true
+
+            # 4. Health check
+            echo "⏳ Waiting for admin panel..."
+            for i in $(seq 1 20); do
+              if curl -sf http://localhost:8001/admin/login > /dev/null 2>&1; then
+                echo "✅ Admin panel is live at /admin/login"
                 exit 0
               fi
               sleep 3
             done
             echo "❌ Admin panel health check failed"
-            docker compose logs --tail=30
+            docker logs embuddy-admin --tail=20
             exit 1
