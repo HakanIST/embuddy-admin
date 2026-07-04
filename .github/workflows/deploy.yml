@@ -81,10 +81,9 @@ jobs:
           script: |
             set -e
 
-            # 1. Ensure API stack (MySQL) is running
+            # 1. Ensure MySQL is running (don't touch API container)
             cd ~/embuddy-api
-            git pull origin main
-            docker compose up -d
+            docker compose up -d mysql
             echo "⏳ Waiting for MySQL..."
             for i in $(seq 1 30); do
               if docker exec embuddy-mysql mysqladmin ping -h localhost -u root -pembuddy-root-2026 > /dev/null 2>&1; then
@@ -94,11 +93,10 @@ jobs:
               sleep 2
             done
 
-            # 2. Deploy admin panel
+            # 2. Deploy admin panel (rebuild only admin container)
             cd ~/embuddy-admin
             git pull origin main
-            docker compose down
-            docker compose up -d --build
+            docker compose up -d --build --force-recreate
 
             # 3. Run migrations inside container
             docker exec embuddy-admin php artisan migrate --force 2>/dev/null || true
