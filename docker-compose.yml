@@ -10,7 +10,7 @@ services:
       APP_ENV: production
       APP_KEY: "base64:Fb90IYY+LyKVgstmLYhQL1aDAeAwWKZrys5IuMLoxd8="
       APP_DEBUG: "false"
-      APP_URL: "http://embuddy-admin.tall.tr"
+      APP_URL: "https://embuddy-admin.tall.tr"
       DB_CONNECTION: mysql
       DB_HOST: embuddy-mysql
       DB_PORT: 3306
