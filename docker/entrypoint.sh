@@ -3,21 +3,18 @@ set -e
 
 cd /var/www/html
 
-# Generate app key if not set
-php artisan key:generate --no-interaction --force 2>/dev/null || true
-
-# Clear caches
+# Clear stale caches
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-# Run migrations for Laravel's own tables (users, sessions, cache)
+# Run migrations
 php artisan migrate --force --no-interaction 2>/dev/null || true
 
 # Seed admin user
 php artisan db:seed --force --no-interaction 2>/dev/null || true
 
-# Optimize
+# Optimize for production
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache

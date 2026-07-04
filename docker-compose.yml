@@ -8,6 +8,7 @@ services:
     environment:
       APP_NAME: "EmBuddy Admin"
       APP_ENV: production
+      APP_KEY: "base64:Fb90IYY+LyKVgstmLYhQL1aDAeAwWKZrys5IuMLoxd8="
       APP_DEBUG: "false"
       APP_URL: "http://embuddy-admin.tall.tr"
       DB_CONNECTION: mysql
