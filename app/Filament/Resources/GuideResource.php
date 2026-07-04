@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\GuideResource\Pages;
 use App\Models\Guide;
 use App\Models\GuideCategory;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -20,17 +20,17 @@ class GuideResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            Schemas\Components\Section::make()->schema([
-                Schemas\Components\TextInput::make('title')->required()->maxLength(255),
-                Schemas\Components\Select::make('categoryId')
+            Forms\Components\Section::make()->schema([
+                Forms\Components\TextInput::make('title')->required()->maxLength(255),
+                Forms\Components\Select::make('categoryId')
                     ->label('Category')
                     ->options(GuideCategory::pluck('name', 'id'))
                     ->required(),
-                Schemas\Components\Textarea::make('summary')->rows(3),
-                Schemas\Components\MarkdownEditor::make('content'),
-                Schemas\Components\TextInput::make('readTimeMinutes')->numeric()->default(5)->label('Read Time (min)'),
-                Schemas\Components\TextInput::make('icon')->maxLength(100),
-                Schemas\Components\Toggle::make('isMandatory')->label('Mandatory'),
+                Forms\Components\Textarea::make('summary')->rows(3),
+                Forms\Components\MarkdownEditor::make('content'),
+                Forms\Components\TextInput::make('readTimeMinutes')->numeric()->default(5)->label('Read Time (min)'),
+                Forms\Components\TextInput::make('icon')->maxLength(100),
+                Forms\Components\Toggle::make('isMandatory')->label('Mandatory'),
             ])->columns(2),
         ]);
     }

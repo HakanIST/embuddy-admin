@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\GuideCategoryResource\Pages;
 use App\Models\GuideCategory;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,10 +16,10 @@ class GuideCategoryResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\TextInput::make('name')->required()->maxLength(100),
-            Schemas\Components\TextInput::make('icon')->maxLength(100)->helperText('SF Symbol name'),
-            Schemas\Components\ColorPicker::make('color'),
-            Schemas\Components\TextInput::make('articleCount')->numeric()->default(0)->label('Article Count'),
+            Forms\Components\TextInput::make('name')->required()->maxLength(100),
+            Forms\Components\TextInput::make('icon')->maxLength(100)->helperText('SF Symbol name'),
+            Forms\Components\ColorPicker::make('color'),
+            Forms\Components\TextInput::make('articleCount')->numeric()->default(0)->label('Article Count'),
         ]);
     }
 

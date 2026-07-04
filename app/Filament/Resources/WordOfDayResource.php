@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\WordOfDayResource\Pages;
 use App\Models\WordOfDay;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,12 +17,12 @@ class WordOfDayResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\TextInput::make('turkishWord')->required()->maxLength(255)->label('Turkish Word'),
-            Schemas\Components\TextInput::make('pronunciation')->maxLength(255),
-            Schemas\Components\TextInput::make('englishTranslation')->required()->maxLength(255)->label('English'),
-            Schemas\Components\Textarea::make('definition')->rows(2),
-            Schemas\Components\DatePicker::make('date')->required()->unique(ignoreRecord: true)->native(false),
-            Schemas\Components\TextInput::make('xpReward')->numeric()->default(25)->label('XP Reward'),
+            Forms\Components\TextInput::make('turkishWord')->required()->maxLength(255)->label('Turkish Word'),
+            Forms\Components\TextInput::make('pronunciation')->maxLength(255),
+            Forms\Components\TextInput::make('englishTranslation')->required()->maxLength(255)->label('English'),
+            Forms\Components\Textarea::make('definition')->rows(2),
+            Forms\Components\DatePicker::make('date')->required()->unique(ignoreRecord: true)->native(false),
+            Forms\Components\TextInput::make('xpReward')->numeric()->default(25)->label('XP Reward'),
         ]);
     }
 

@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\MediaItemResource\Pages;
 use App\Models\MediaItem;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,16 +16,16 @@ class MediaItemResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\Section::make()->schema([
-                Schemas\Components\TextInput::make('title')->required()->maxLength(255),
-                Schemas\Components\Select::make('mediaType')->options([
+            Forms\Components\Section::make()->schema([
+                Forms\Components\TextInput::make('title')->required()->maxLength(255),
+                Forms\Components\Select::make('mediaType')->options([
                     'podcast' => '🎙 Podcast', 'book' => '📚 Book', 'video' => '🎬 Video',
                 ])->required()->label('Type'),
-                Schemas\Components\TextInput::make('creator')->maxLength(255),
-                Schemas\Components\TextInput::make('episode')->numeric()->label('Episode #'),
-                Schemas\Components\TextInput::make('durationMinutes')->numeric()->label('Duration (min)'),
-                Schemas\Components\TextInput::make('thumbnailUrl')->url()->maxLength(500),
-                Schemas\Components\TextInput::make('mediaUrl')->url()->maxLength(500),
+                Forms\Components\TextInput::make('creator')->maxLength(255),
+                Forms\Components\TextInput::make('episode')->numeric()->label('Episode #'),
+                Forms\Components\TextInput::make('durationMinutes')->numeric()->label('Duration (min)'),
+                Forms\Components\TextInput::make('thumbnailUrl')->url()->maxLength(500),
+                Forms\Components\TextInput::make('mediaUrl')->url()->maxLength(500),
             ])->columns(2),
         ]);
     }

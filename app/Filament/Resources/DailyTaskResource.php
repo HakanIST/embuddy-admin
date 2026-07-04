@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\DailyTaskResource\Pages;
 use App\Models\DailyTask;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,13 +16,13 @@ class DailyTaskResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\TextInput::make('title')->required()->maxLength(255),
-            Schemas\Components\TextInput::make('xpReward')->numeric()->default(10)->label('XP Reward'),
-            Schemas\Components\Select::make('taskType')->options([
+            Forms\Components\TextInput::make('title')->required()->maxLength(255),
+            Forms\Components\TextInput::make('xpReward')->numeric()->default(10)->label('XP Reward'),
+            Forms\Components\Select::make('taskType')->options([
                 'profile' => 'Profile', 'mood' => 'Mood', 'guide' => 'Guide',
                 'word' => 'Word', 'campus' => 'Campus',
             ])->required()->label('Task Type'),
-            Schemas\Components\Toggle::make('isRecurring')->default(true)->label('Recurring Daily'),
+            Forms\Components\Toggle::make('isRecurring')->default(true)->label('Recurring Daily'),
         ]);
     }
 

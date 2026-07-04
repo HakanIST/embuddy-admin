@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\CampusLocationResource\Pages;
 use App\Models\CampusLocation;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,21 +16,21 @@ class CampusLocationResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\Section::make()->schema([
-                Schemas\Components\TextInput::make('name')->required()->maxLength(255),
-                Schemas\Components\Select::make('campus')->options([
+            Forms\Components\Section::make()->schema([
+                Forms\Components\TextInput::make('name')->required()->maxLength(255),
+                Forms\Components\Select::make('campus')->options([
                     'Üsküdar' => 'Üsküdar', 'Altunizade' => 'Altunizade', 'Çekmeköy' => 'Çekmeköy',
                 ])->required(),
-                Schemas\Components\TextInput::make('building')->maxLength(100),
-                Schemas\Components\TextInput::make('floor')->maxLength(50),
-                Schemas\Components\TextInput::make('schedule')->maxLength(100)->placeholder('Mon-Sat, 08:00-22:00'),
-                Schemas\Components\Select::make('category')->options([
+                Forms\Components\TextInput::make('building')->maxLength(100),
+                Forms\Components\TextInput::make('floor')->maxLength(50),
+                Forms\Components\TextInput::make('schedule')->maxLength(100)->placeholder('Mon-Sat, 08:00-22:00'),
+                Forms\Components\Select::make('category')->options([
                     'library' => 'Library', 'cafe' => 'Cafe', 'lab' => 'Lab',
                     'health' => 'Health', 'office' => 'Office',
                 ]),
-                Schemas\Components\TextInput::make('latitude')->numeric(),
-                Schemas\Components\TextInput::make('longitude')->numeric(),
-                Schemas\Components\Toggle::make('hasWheelchairAccess')->label('Wheelchair Access'),
+                Forms\Components\TextInput::make('latitude')->numeric(),
+                Forms\Components\TextInput::make('longitude')->numeric(),
+                Forms\Components\Toggle::make('hasWheelchairAccess')->label('Wheelchair Access'),
             ])->columns(2),
         ]);
     }

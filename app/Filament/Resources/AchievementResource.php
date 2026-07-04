@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\AchievementResource\Pages;
 use App\Models\Achievement;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,15 +16,15 @@ class AchievementResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\TextInput::make('name')->required()->maxLength(255),
-            Schemas\Components\Textarea::make('description')->rows(2),
-            Schemas\Components\TextInput::make('icon')->maxLength(100)->helperText('SF Symbol name'),
-            Schemas\Components\TextInput::make('xpReward')->numeric()->default(0)->label('XP Reward'),
-            Schemas\Components\Select::make('conditionType')->options([
+            Forms\Components\TextInput::make('name')->required()->maxLength(255),
+            Forms\Components\Textarea::make('description')->rows(2),
+            Forms\Components\TextInput::make('icon')->maxLength(100)->helperText('SF Symbol name'),
+            Forms\Components\TextInput::make('xpReward')->numeric()->default(0)->label('XP Reward'),
+            Forms\Components\Select::make('conditionType')->options([
                 'streak' => 'Streak', 'checkin' => 'Check-in', 'guide' => 'Guide Read',
                 'profile' => 'Profile', 'campus' => 'Campus',
             ])->label('Condition Type'),
-            Schemas\Components\TextInput::make('conditionValue')->numeric()->default(1)->label('Condition Value'),
+            Forms\Components\TextInput::make('conditionValue')->numeric()->default(1)->label('Condition Value'),
         ]);
     }
 

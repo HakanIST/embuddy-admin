@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmbuddyUserResource\Pages;
 use App\Models\EmbuddyUser;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -22,24 +22,24 @@ class EmbuddyUserResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            Schemas\Components\Section::make('Personal Information')->schema([
-                Schemas\Components\TextInput::make('fullName')
+            Forms\Components\Section::make('Personal Information')->schema([
+                Forms\Components\TextInput::make('fullName')
                     ->required()
                     ->maxLength(255),
-                Schemas\Components\TextInput::make('email')
+                Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
-                Schemas\Components\TextInput::make('department')
+                Forms\Components\TextInput::make('department')
                     ->maxLength(255),
-                Schemas\Components\TextInput::make('country')
+                Forms\Components\TextInput::make('country')
                     ->maxLength(100),
-                Schemas\Components\TextInput::make('year')
+                Forms\Components\TextInput::make('year')
                     ->numeric()
                     ->minValue(1)
                     ->maxValue(6),
-                Schemas\Components\Select::make('language')
+                Forms\Components\Select::make('language')
                     ->options([
                         'en' => 'English',
                         'tr' => 'Türkçe',
@@ -48,15 +48,15 @@ class EmbuddyUserResource extends Resource
                     ->default('en'),
             ])->columns(2),
 
-            Schemas\Components\Section::make('Gamification')->schema([
-                Schemas\Components\TextInput::make('xpPoints')
+            Forms\Components\Section::make('Gamification')->schema([
+                Forms\Components\TextInput::make('xpPoints')
                     ->numeric()
                     ->default(0)
                     ->label('XP Points'),
-                Schemas\Components\TextInput::make('level')
+                Forms\Components\TextInput::make('level')
                     ->numeric()
                     ->default(1),
-                Schemas\Components\Toggle::make('isActive')
+                Forms\Components\Toggle::make('isActive')
                     ->default(true)
                     ->label('Active'),
             ])->columns(3),

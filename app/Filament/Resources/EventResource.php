@@ -2,7 +2,7 @@
 namespace App\Filament\Resources;
 use App\Filament\Resources\EventResource\Pages;
 use App\Models\Event;
-use Filament\Schemas;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,20 +16,20 @@ class EventResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Schemas\Components\Section::make()->schema([
-                Schemas\Components\TextInput::make('title')->required()->maxLength(255),
-                Schemas\Components\Textarea::make('description')->rows(3),
-                Schemas\Components\TextInput::make('location')->maxLength(255),
-                Schemas\Components\DatePicker::make('eventDate')->required()->native(false),
-                Schemas\Components\TimePicker::make('eventTime')->native(false),
-                Schemas\Components\Select::make('tag')->options([
+            Forms\Components\Section::make()->schema([
+                Forms\Components\TextInput::make('title')->required()->maxLength(255),
+                Forms\Components\Textarea::make('description')->rows(3),
+                Forms\Components\TextInput::make('location')->maxLength(255),
+                Forms\Components\DatePicker::make('eventDate')->required()->native(false),
+                Forms\Components\TimePicker::make('eventTime')->native(false),
+                Forms\Components\Select::make('tag')->options([
                     'New Students' => 'New Students',
                     'Social' => 'Social',
                     'Learning' => 'Learning',
                     'Cultural' => 'Cultural',
                 ]),
-                Schemas\Components\TextInput::make('attendeeCount')->numeric()->default(0)->label('Attendees'),
-                Schemas\Components\TextInput::make('imageUrl')->url()->maxLength(500)->label('Image URL'),
+                Forms\Components\TextInput::make('attendeeCount')->numeric()->default(0)->label('Attendees'),
+                Forms\Components\TextInput::make('imageUrl')->url()->maxLength(500)->label('Image URL'),
             ])->columns(2),
         ]);
     }
