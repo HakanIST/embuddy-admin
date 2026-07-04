@@ -3,7 +3,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MentorResource\Pages;
 use App\Models\Mentor;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,8 +15,8 @@ class MentorResource extends Resource {
     protected static ?int $navigationSort = 20;
     protected static ?string $navigationLabel = 'Mentors';
 
-    public static function form(Form $form): Form {
-        return $form->schema([
+    public static function form(Schema $schema): Schema {
+        return $schema->schema([
             Forms\Components\Section::make('Mentor Details')->schema([
                 Forms\Components\Select::make('userId')
                     ->label('User Account')
@@ -66,11 +66,11 @@ class MentorResource extends Resource {
             Tables\Filters\TernaryFilter::make('isActive')->label('Active'),
         ])
         ->actions([
-            Tables\Actions\EditAction::make(),
+            \Filament\Actions\EditAction::make(),
         ])
         ->bulkActions([
-            Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+            \Filament\Actions\BulkActionGroup::make([
+                \Filament\Actions\DeleteBulkAction::make(),
             ]),
         ]);
     }

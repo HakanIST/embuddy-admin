@@ -31,7 +31,7 @@ class MentorMessageResource extends Resource {
             Tables\Filters\TernaryFilter::make('isRead')->label('Read Status'),
         ])
         ->actions([
-            Tables\Actions\Action::make('markRead')
+            \Filament\Actions\Action::make('markRead')
                 ->label('Mark Read')
                 ->icon('heroicon-o-check')
                 ->color('success')

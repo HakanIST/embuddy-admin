@@ -3,7 +3,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MentorAssignmentResource\Pages;
 use App\Models\MentorAssignment;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -16,8 +16,8 @@ class MentorAssignmentResource extends Resource {
     protected static ?string $navigationLabel = 'Assignments';
     protected static ?string $modelLabel = 'Mentor Assignment';
 
-    public static function form(Form $form): Form {
-        return $form->schema([
+    public static function form(Schema $schema): Schema {
+        return $schema->schema([
             Forms\Components\Section::make('Assignment Details')->schema([
                 Forms\Components\Select::make('mentorId')
                     ->label('Mentor')
@@ -49,7 +49,7 @@ class MentorAssignmentResource extends Resource {
             Tables\Columns\TextColumn::make('mentor.user.fullName')->label('Mentor')->searchable()->weight('bold'),
             Tables\Columns\TextColumn::make('mentee.fullName')->label('Student')->searchable(),
             Tables\Columns\TextColumn::make('mentee.department')->label('Department'),
-            Tables\Columns\BadgeColumn::make('status')->color(fn ($state) => match($state) {
+            Tables\Columns\TextColumn::make('status')->badge()->color(fn ($state) => match($state) {
                 'active' => 'success',
                 'paused' => 'warning',
                 'completed' => 'gray',
@@ -71,11 +71,11 @@ class MentorAssignmentResource extends Resource {
             ]),
         ])
         ->actions([
-            Tables\Actions\EditAction::make(),
+            \Filament\Actions\EditAction::make(),
         ])
         ->bulkActions([
-            Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+            \Filament\Actions\BulkActionGroup::make([
+                \Filament\Actions\DeleteBulkAction::make(),
             ]),
         ]);
     }

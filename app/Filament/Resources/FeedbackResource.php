@@ -5,8 +5,8 @@ use App\Models\Feedback;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Infolists;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
+use Filament\Forms;
 
 class FeedbackResource extends Resource {
     protected static ?string $model = Feedback::class;
@@ -28,18 +28,18 @@ class FeedbackResource extends Resource {
         ])
         ->defaultSort('createdAt', 'desc')
         ->actions([
-            Tables\Actions\ViewAction::make(),
+            \Filament\Actions\ViewAction::make(),
         ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist {
-        return $infolist->schema([
-            Infolists\Components\Section::make('Feedback Details')->schema([
-                Infolists\Components\TextEntry::make('user.fullName')->label('Student'),
-                Infolists\Components\TextEntry::make('user.email')->label('Email'),
-                Infolists\Components\TextEntry::make('subject')->weight('bold'),
-                Infolists\Components\TextEntry::make('message')->columnSpanFull(),
-                Infolists\Components\TextEntry::make('createdAt')->dateTime()->label('Submitted At'),
+    public static function infolist(Schema $schema): Schema {
+        return $schema->schema([
+            \Filament\Infolists\Components\Section::make('Feedback Details')->schema([
+                \Filament\Infolists\Components\TextEntry::make('user.fullName')->label('Student'),
+                \Filament\Infolists\Components\TextEntry::make('user.email')->label('Email'),
+                \Filament\Infolists\Components\TextEntry::make('subject')->weight('bold'),
+                \Filament\Infolists\Components\TextEntry::make('message')->columnSpanFull(),
+                \Filament\Infolists\Components\TextEntry::make('createdAt')->dateTime()->label('Submitted At'),
             ])->columns(2),
         ]);
     }
