@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Event extends Model
+{
+    protected $table = 'Event';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'location',
+        'eventDate',
+        'eventTime',
+        'tag',
+        'imageUrl',
+        'attendeeCount',
+    ];
+
+    protected $casts = [
+        'attendeeCount' => 'integer',
+    ];
+}
