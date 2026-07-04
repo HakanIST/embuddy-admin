@@ -51,4 +51,24 @@ class EmbuddyUser extends Model
     {
         return $this->hasMany(UserTaskCompletion::class, 'userId');
     }
+
+    public function mentor()
+    {
+        return $this->hasOne(Mentor::class, 'userId');
+    }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'userId');
+    }
+
+    public function savedContents()
+    {
+        return $this->hasMany(SavedContent::class, 'userId');
+    }
+
+    public function mentorAssignments()
+    {
+        return $this->hasMany(MentorAssignment::class, 'menteeId');
+    }
 }
