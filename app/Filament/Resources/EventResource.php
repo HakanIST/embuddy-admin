@@ -28,7 +28,7 @@ class EventResource extends Resource {
                     'Learning' => 'Learning',
                     'Cultural' => 'Cultural',
                 ]),
-                Forms\Components\TextInput::make('attendeeCount')->numeric()->default(0)->label('Attendees'),
+                Forms\Components\TextInput::make('attendeeCount')->numeric()->default(0)->label('Attendee Count')->disabled()->helperText('Auto-updated when users join/leave'),
                 Forms\Components\TextInput::make('imageUrl')->url()->maxLength(500)->label('Image URL'),
             ])->columns(2),
         ]);
@@ -43,7 +43,8 @@ class EventResource extends Resource {
             Tables\Columns\TextColumn::make('tag')->badge()->color(fn ($state) => match($state) {
                 'Social' => 'success', 'Learning' => 'info', 'New Students' => 'warning', default => 'gray'
             }),
-            Tables\Columns\TextColumn::make('attendeeCount')->sortable()->label('Attendees'),
+            Tables\Columns\TextColumn::make('attendeeCount')->sortable()->label('Attendees')
+                ->icon('heroicon-m-user-group'),
         ])
         ->filters([
             \Filament\Tables\Filters\SelectFilter::make('tag')->options([
@@ -52,6 +53,12 @@ class EventResource extends Resource {
         ])
         ->actions([\Filament\Actions\EditAction::make(), \Filament\Actions\DeleteAction::make()])
         ->bulkActions([\Filament\Actions\BulkActionGroup::make([\Filament\Actions\DeleteBulkAction::make()])]);
+    }
+
+    public static function getRelations(): array {
+        return [
+            EventResource\RelationManagers\AttendeesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array {

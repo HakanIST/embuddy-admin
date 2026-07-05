@@ -23,4 +23,9 @@ class Event extends Model
     protected $casts = [
         'attendeeCount' => 'integer',
     ];
+
+    public function attendees()
+    {
+        return $this->hasMany(EventAttendee::class, 'eventId');
+    }
 }
