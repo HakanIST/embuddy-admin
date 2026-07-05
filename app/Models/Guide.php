@@ -24,6 +24,7 @@ class Guide extends Model
         'isMandatory' => 'boolean',
         'readTimeMinutes' => 'integer',
         'createdAt' => 'datetime',
+        'content' => 'array',
     ];
 
     public function category()
