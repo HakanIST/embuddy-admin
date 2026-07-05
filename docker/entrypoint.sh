@@ -8,11 +8,11 @@ php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-# Run migrations
-php artisan migrate --force --no-interaction 2>/dev/null || true
+# Run migrations (create users, sessions, cache tables + Prisma table guards)
+php artisan migrate --force --no-interaction || echo "⚠️  Migration failed!"
 
 # Seed admin user
-php artisan db:seed --force --no-interaction 2>/dev/null || true
+php artisan db:seed --force --no-interaction || echo "⚠️  Seeding failed!"
 
 # Optimize for production
 php artisan config:cache
