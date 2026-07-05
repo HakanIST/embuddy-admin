@@ -28,6 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('EmBuddy Admin')
+            ->brandLogo(asset('images/logo.png'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('favicon-32x32.png'))
             ->colors([
                 'primary' => Color::Teal,
                 'danger' => Color::Rose,
