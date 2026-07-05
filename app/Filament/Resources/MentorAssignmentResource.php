@@ -18,7 +18,7 @@ class MentorAssignmentResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Forms\Components\Section::make('Assignment Details')->schema([
+            \Filament\Schemas\Components\Section::make('Assignment Details')->schema([
                 Forms\Components\Select::make('mentorId')
                     ->label('Mentor')
                     ->relationship('mentor.user', 'fullName')

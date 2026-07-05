@@ -16,7 +16,7 @@ class EventResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Forms\Components\Section::make()->schema([
+            \Filament\Schemas\Components\Section::make()->schema([
                 Forms\Components\TextInput::make('title')->required()->maxLength(255),
                 Forms\Components\Textarea::make('description')->rows(3),
                 Forms\Components\TextInput::make('location')->maxLength(255),

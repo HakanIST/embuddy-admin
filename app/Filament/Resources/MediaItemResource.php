@@ -16,7 +16,7 @@ class MediaItemResource extends Resource {
 
     public static function form(Schema $schema): Schema {
         return $schema->schema([
-            Forms\Components\Section::make()->schema([
+            \Filament\Schemas\Components\Section::make()->schema([
                 Forms\Components\TextInput::make('title')->required()->maxLength(255),
                 Forms\Components\Select::make('mediaType')->options([
                     'podcast' => '🎙 Podcast', 'book' => '📚 Book', 'video' => '🎬 Video',

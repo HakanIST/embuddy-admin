@@ -22,7 +22,7 @@ class EmbuddyUserResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            Forms\Components\Section::make('Personal Information')->schema([
+            \Filament\Schemas\Components\Section::make('Personal Information')->schema([
                 Forms\Components\TextInput::make('fullName')
                     ->required()
                     ->maxLength(255),
@@ -48,7 +48,7 @@ class EmbuddyUserResource extends Resource
                     ->default('en'),
             ])->columns(2),
 
-            Forms\Components\Section::make('Gamification')->schema([
+            \Filament\Schemas\Components\Section::make('Gamification')->schema([
                 Forms\Components\TextInput::make('xpPoints')
                     ->numeric()
                     ->default(0)
